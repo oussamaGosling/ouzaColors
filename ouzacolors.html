@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ouza colors</title>
+	<link rel="stylesheet" type="text/css" href="inputRange.css">
+	<link rel="stylesheet" type="text/css" href="inputRadio.css">
+	<link rel="stylesheet" type="text/css" href="inputCheckbox.css">
+	<link rel="stylesheet" type="text/css" href="icon/css/iconmonstr-iconic-font.min.css">
+	<!-- for the hover icons -->
+	
+	<!-- 
+         the new thing that i know
+         - boucle for remove all tha childerns
+         - use setAttribute remove the first value and add the new one
+         - i find generater for input range i can use it in separate css file
+         - oninput event onchange in input range 
+             1- event happen with mouse dreg the range
+             2- event happen after mouse click on range 
+         - shift() remove the first elem of array
+         - pop() remove the last elem of array  
+         - user-select: none; with it the user can not select any item like text...   
+         - var audio = new Audio('soundflip.mp3');  audio.play() for sound event
+         - Math.floor(Math.random() * copieTxt.length) random val frpm 0 to length-1
+         - text-transform: uppercase; or : lowercase; or : capitalize;like Lorem Ipsum Dolor
+       
+
+
+	 -->
+	<style type="text/css">
+	   *{
+	   	margin:0px;
+	   	padding: 0px;
+	   	box-sizing: border-box;
+	   }
+	   body{
+	   	display: flex;
+	   	flex-wrap: wrap;
+	   }
+		   .control{
+		   	display: flex;
+		   	/*position: fixed;*/
+	   		flex-wrap: wrap;
+		   	flex-direction: column;
+		   	width: 100%;
+		   	height: 200px;
+		   	justify-content: center;
+		   	align-items: center;
+
+		   }    
+		   		@font-face {
+				  font-family: myVarelaRound;
+				  src: url(VarelaRound.otf);
+				}
+		   		.SatuValShow{
+		   			margin-top: 30px;
+					width: 120px;
+					height: 80px; 
+					background: #222831;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					position: relative;
+					-moz-border-radius: 10px;
+					-webkit-border-radius: 10px;
+					border-radius: 10px;
+					font-family: myVarelaRound;
+					font-size: 40px;
+					color:rgba(255, 67, 95, 0.93);   /*#00adb5*/
+/*box-shadow: 3px 11px 61px 3px rgba(0,0,0,1);*/
+		   		}
+		   		.SatuValShow:before {
+					content: "";
+					position: absolute;
+					bottom: 100%;
+					right: 50px;
+					width: 0;
+					height: 0;
+					border-left: 13px solid transparent;
+					border-bottom: 26px solid #222831;
+					border-right: 13px solid transparent;
+                 }
+                 .sound_onOff{
+                 	text-align: center;
+                 	margin-top:10px;
+                 	font-family: myVarelaRound;
+                 	font-size: 20px;
+                 	display: flex;
+                 	justify-content: center;
+
+                 }
+               
+		   .colorsScreen{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			}
+				.box{
+				display: flex;
+				overflow: hidden;
+				align-items: center;
+				justify-content: center;
+				width:300px; 
+				height:150px;
+				background-color: #CC8800;
+				transition: 0.6s ease;/*for onclick event*/
+				color: white;
+				margin: 2px;
+				}
+					input[type=text]:disabled {
+							  background: transparent;
+							  border:none;
+							  text-align: center;
+							  text-transform: uppercase;
+							  font-weight: bold;
+							  font-family: 'Calibri Light',sans-serif;
+							  color: #3d0043;
+							  font-size: 25px;
+						}
+				/* for the hover event start*/
+	        .boxhover{
+				display: none;
+				align-items: center;
+				justify-content: center;
+				position: absolute;
+				width:300px; 
+				height:150px;
+				 box-sizing:border-box;
+		        background:rgba(255,255,255,0.7);/*rgba(0,0,0,.5);*/
+		        animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+			} 
+			@keyframes swing-in-top-fwd{
+				0%{transform:rotateX(-100deg);transform-origin:top;opacity:0}
+				100%{transform:rotateX(0deg);transform-origin:top;opacity:1}}
+					.icon{
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+						border-radius: 10px;
+						box-shadow:1px 2px 9px  #393e46;
+						font-size: 18px;
+						background:#eeeeee;
+						color: #222831;
+						margin-left: 10px;
+						padding: 5px;   
+						transition: 0.6s ease;
+					}
+					.icon:hover{
+						cursor: pointer;
+						color:#9b59b6;
+						transform: scale(1.15);
+					}
+							.icon > span{
+								font-family: myVarelaRound;/*'Calibri Light',sans-serif;*/
+								font-size: 15px;
+							            }
+			.box:hover{
+				cursor: pointer;
+				
+			}
+         /*hover box event style end*/		
+		    .boxcopied{
+		   	    /*display: flex;*/
+		        flex-direction: column;	
+		        justify-content: center;
+		        align-items: center;
+		        display: none;
+				position: fixed;
+				z-index: 222;
+				top: 0px;
+				left:0px;
+				width: 100%;
+				height: 100%;
+		        background-color: red;
+		        color: white;
+		        font-family:  'Calibri Light',sans;
+		        font-weight: bold;
+				-webkit-touch-callout: none; /* iOS Safari */
+				-webkit-user-select: none; /* Safari */
+				-khtml-user-select: none; /* Konqueror HTML */
+				-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* Internet Explorer/Edge */
+				user-select: none; /* Non-prefixed version, currently
+	                                  supported by Chrome and Opera */
+             }       
+			   .copytext{
+			   	/*display:flex;
+			   	flex-wrap: wrap;
+			   	justify-content: center;*/
+			   	width: 100%;
+			   	height: 150px;
+			   	background:rgba(0,0,0,0.6);
+			   	font-size: 100px;
+			   	text-align: center;
+			   	line-height: 150px;
+			   	text-transform: uppercase;
+			   }    
+			   .copyval{
+			   	width:  500px;
+			   	height:20%;
+               line-height:120px; 
+			   	 text-align: center;
+			    margin-top: -12px; 
+			   	background:rgba(0,0,0,0.6);
+			   	font-size: 40px;
+			   	   border-radius: 50% / 10%;
+			      text-indent: .1em;	   	  
+			   }				
+					   @keyframes tracking-in-contract-bck { /*in animation*/
+							  0% {
+							    letter-spacing: 1em;
+							    transform: translateZ(300px);
+							    opacity: 0;
+							  }
+							  40% {
+							    opacity: 0.6;
+							  }
+							  100% {
+							    transform: translateZ(0);
+							    opacity: 1;
+							  }
+						}
+						/*out animation*/
+						@keyframes tracking-out-expand-fwd {
+							  0% {
+							    transform: translateZ(0);
+							    opacity: 1;
+							  }
+							  60% {
+							    opacity: 0.8;
+							  }
+							  100% {
+							    letter-spacing: 1em;
+							    transform: translateZ(300px);
+							    opacity: 0;
+							  }
+						}	
+/*============================family colors css================================*/
+	      .famillycolorsTag{
+			height: 100%;
+			width:  0px;
+			position: fixed;
+			z-index: 1;
+			display: flex;
+			flex-direction:column;
+			-ms-align-items: center;
+			align-items: center;
+			top: 0;
+			left: 0;
+			background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+			opacity: .95;
+			overflow-x: hidden;
+			/*overflow-y:scroll;*/
+			transition: 0.5s;
+			padding-top: 70px;
+	    }
+		    .closebtn{
+		    	/*z-index: 1;*/
+				text-decoration: none;
+				font-size: 40px;
+				font-weight: bold;
+				color: #eeeeee;
+				display: block;
+				margin-right:8px;
+				transition: 0.3s;
+				/*border: 1px solid red;*/
+		    }
+		    .closebtn:hover{
+	            color: rgba(255, 67, 95, 0.93);
+		    }
+		    .mySidetitle{
+		    	position: absolute;
+		    	top: 0px;
+		    	display: flex;
+		    	-ms-align-items: center;
+		    	align-items: center;
+		    	justify-content: space-between;
+		    	width: 99%;
+		    	font-size: 25px;
+				font-weight: bold;
+				background-color: #484d4d;
+				color: #eeeeee;
+				font-family: 'Calibri Light',sans-serif;
+				border-bottom: 1px solid rgba(255, 67, 95, 0.93);
+				text-align: center;
+				padding-bottom:  8px;
+				padding-left:  8px;
+				user-select: none;
+		    }
+		    		.targetcolor{
+					  position: relative; 
+					  width: 120px;
+				      height: 40px;
+				      background: red;
+				      border-radius: 50% / 10%;
+				      color: white;
+				      text-align: center;
+				      transition: 0.5s;
+				      text-indent: .1em;
+		    		}
+		    		.targetcolor:before {
+				      content: '';
+				      position: absolute;
+				      top: 10%;
+				      bottom: 10%;
+				      right: -5%;
+				      left: -5%;
+				      background: inherit;
+				      border-radius: 5% / 50%;
+				    }
+  
+		    		.targetcolor:hover{
+		    			/*cursor: none;*/
+		    			transform: scale(.95);
+		    		}
+		    .apropos{
+		    	position: fixed;
+		    	bottom: 0px;
+		    	width: 100%;
+		    	display: flex;
+		    	flex-direction: column;
+		    	justify-content: center;
+		    	-ms-align-items: center;
+		    	align-items: center;
+		    	color: #606060;
+		    	font-size: 18px;
+			    font-family: 'Calibri Light',sans-serif;
+
+		    }		
+
+           .famillycolorsScreen{
+           	width: 95%;
+           	height: 80%;
+           	display: flex;
+           	/*flex-direction: column;*/
+           	flex-wrap: wrap;
+           justify-content: center;
+           	overflow-y: auto;
+           	overflow-x: hidden;
+           	border: 1px solid red;
+           	/*margin-bottom: 10px; */
+
+           }
+	           .famcolRow{
+	           	display: flex;
+	           	justify-content: space-between;
+	           	-ms-align-items: center;
+	           	align-items: center;
+	           	width: 90%;
+	           	/*border: 1px solid red;*/
+	           }
+
+	           		.famcolbox{
+	           			display: flex;	
+	           			flex-direction: column;
+	           			justify-content: center;
+	           			height: 35px;
+	           			padding: 2px;
+	           			margin: 2px;
+	           			border-radius:2px;
+	           			background-color: green;
+	           			text-align: center;
+	           			color :#eeeeee;
+                        border:1px solid red;
+	           			line-height: 30px;
+	           			transition: 0.5s;
+	           		}
+			           		.famcolbox:hover{
+			           			width:300px; 
+								height:150px;
+								cursor: pointer;
+								border: 1px solid rgba(255, 67, 95, 0.93);
+								border-radius: 2px;
+			           		}
+			           		.famcolbox:hover > input[type=text].valcolorFam{
+			           			 font-size: 25px;	
+			           			 /*border:2px solid red;*/
+			           			 /*position: absolute;*/
+			           		}
+                    .boxhover2{
+						display: none;
+						align-items: center;
+						justify-content: center;
+						width:242px; 
+						height:120px;
+						 box-sizing:border-box;
+				        /*background:rgba(255,67,95,.5);*/
+				      /*  background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; 
+						background-blend-mode: multiply,multiply;*/
+						background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+				       animation: flip-horizontal-bottom 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+					}
+					@keyframes flip-horizontal-bottom {
+						  0% {
+						    transform: rotateX(0);
+						  }
+						  50% {
+						    transform: rotateX(80deg);
+						  }
+						  100% {
+						    transform: rotateX(0);
+						  }
+						}
+
+	           		input[type=text]:disabled {
+								  background: transparent;
+								  border:none;
+								  text-align: center;
+								  text-transform: uppercase;
+								  font-weight: bold;
+								  font-family: 'Calibri Light',sans-serif;
+								  color: #3d0043;
+								  width: 235px;
+                                   transition: 0.5s;
+								  font-size: 25px;	  
+							}
+							input[type=text].valcolorFam{
+			           			font-size: 16px;
+			           			/*background-color: red;*/
+			           		}
+							
+
+					.presetage{
+						display: flex;
+						/*flex-wrap: wrap;*/
+						justify-content: center;
+						-ms-align-items: center;
+						align-items: center;
+						width: 40px;
+						height: 40px;
+						text-align: center;
+						line-height:  40px;
+						/*border: 1px solid green;*/
+						font-size: 13px;
+						font-weight: bold;
+					}
+							.thisis{
+					             background:url('justhere.png')no-repeat;
+					             background-size: 100%;
+					             width:30px;
+					             height :30px;
+					          }
+          /*===================*/
+          
+	</style>
+</head>
+<body>
+	<main>
+		<div class="control">
+				<input type="range" id="Saturation" name="volume" min="0" max="100" value="100">
+				<div class="SatuValShow">100%</div>
+				<div style=" font-family: myVarelaRound; text-align:left;margin-top:1px;background-color: white " >
+				    <div>   
+				        <input type="radio" onchange="selecttypeVale(1)" name="radio" id="radio1" class="radio" value="1" checked="" />   
+				        <label for="radio1">hex</label>   
+				    </div>   
+				    
+				    <div>      
+				        <input type="radio" onchange="selecttypeVale(2)" name="radio" id="radio2" class="radio" value="2"/>   
+				        <label for="radio2">rgb</label>   
+				    </div>   
+				    
+				    <div>      
+				        <input type="radio" onchange="selecttypeVale(3)" name="radio" id="radio3" class="radio" value="3"/>   
+				        <label for="radio3">hsl</label>   
+				    </div>  
+			 </div>
+			 <div class="sound_onOff" style=" ">
+					<input class="input-switch" id="switch2" type="checkbox" name="switch" checked="checked" />
+					Sound
+					<label for="switch2">
+					    <span class="switch-label off">Off</span>
+					    <span class="switch-label on">On</span>
+					    <span class="grip"></span>
+					</label>
+			</div>
+		</div> <!-- for input range for change Saturation and the    -->
+		<section class="colorsScreen">
+			<div class="boxhover" id="myhover"  >
+				<i class="im icon im-paintbrush"><span >copy</span></i>
+				<i class="im icon im-users"><span >family color</span></i>
+				<i class="im icon im-folder-add"><span >favorite</span></i>
+			</div>
+			<div class="boxhover2" id="myhoverFam"  >
+				<i class="im icon im-paintbrush"><span >copy</span></i>
+				<i class="im icon im-folder-add"><span >favorite</span></i>
+			</div>
+			<!-- boxcopied is screen of copy color event show for 3sec -->
+			
+		</section>
+		<div class="famillycolorsTag" id="mySidenav" >
+				<div class="mySidetitle">
+					<div >family colors of</div> <span class="targetcolor"></span>
+					<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+				</div>
+				<div class="famillycolorsScreen" ></div>
+			    <div class="apropos">
+			    	@2019 abdellaoui oussama
+			    </div>	
+        	</div>
+		<div class="boxcopied" >
+				<div class="copytext" id="copytext">COPIED!</div>
+				<div class="copyval" id="copyval">#12345A</div>
+			</div>
+	</main>
+
+<script type="text/javascript">
+	let Saturation = document.getElementById('Saturation')
+	let SatuValShow  = document.getElementsByClassName('SatuValShow')
+	let myhover =document.getElementById('myhover') 
+	var box=document.getElementsByClassName("box"); 
+	SatuValShow=SatuValShow[0]
+	let boxcopied =document.getElementsByClassName("boxcopied");// copy screen
+    boxcopied=boxcopied[0] 
+	let hslVals = [], hexVals = [],rgbVals = [],selectedVal=1; 
+    let hslValsfam = [], hexValsfam = [],rgbValsfam = []
+	let hslValsObj = []
+    let switch2 =document.getElementById('switch2')
+    let playSound = true
+    let famcolbox=document.getElementsByClassName("famcolbox");
+    let myhoverFam =document.getElementById('myhoverFam')  
+    let targetcolor=document.getElementsByClassName("targetcolor")[0];
+
+
+ 
+ //load functions      
+	createMaincolors("100")
+	field_rgbVals_AND_hexVals()
+	writeColorsVals(selectedVal)
+
+// events
+switch2.onclick=function() {
+		if (switch2.checked == true){
+			playSound=true	}
+		else {playSound=false}
+}
+ myhover.children[0].onclick= function () {
+		playSoundFun() 
+		var mycopyevent = myhover.parentElement
+		// console.log(mycopyevent)
+		boxcopied.style.display="flex"
+		boxcopied.style.background=mycopyevent.style.background
+		//color value i ill take it from the input value
+		boxcopied.children[0].innerText=RundomcopieTxt()
+		boxcopied.children[1].innerText=mycopyevent.children[0].value
+		//animation
+		boxcopied.children[0].style.animation="tracking-in-contract-bck 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both"
+		boxcopied.children[1].style.animation="tracking-in-contract-bck 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both"
+		setTimeout(function(){ //for the outanimation
+		boxcopied.children[0].style.animation="tracking-out-expand-fwd 0.8s cubic-bezier(0.550, 0.085, 0.680, 0.530) 1s both"
+		boxcopied.children[1].style.animation="tracking-out-expand-fwd 0.8s cubic-bezier(0.550, 0.085, 0.680, 0.530) 1s both"
+		}, 1000);
+		setTimeout(function(){ 
+		boxcopied.style.display="none"
+		}, 3000); 
+ }
+ myhover.children[1].onclick= function (){
+	 	var mycopyevent = myhover.parentElement
+	 	var obj=hslValsObj[mycopyevent.id]
+	 	// console.log()
+	 	playSoundFun() 
+	 	openNav()
+	 	removeAllFamilyColorsVlas()
+	 	createFamilyColors(obj.h,obj.s)
+	 	field_rgbValsfam_AND_hexValsfam()
+	 	writeFamilyColorsVals(selectedVal)
+	 	// console.log(obj.h+" "+obj.s)
+ } 
+ myhoverFam.children[0].onclick= function (){
+ 	playSoundFun() 
+	var mycopyevent = myhoverFam.parentElement
+	// console.log(mycopyevent) just the same i have to fixe it later 
+	boxcopied.style.display="flex"
+		boxcopied.style.background=mycopyevent.style.background
+		// boxcopied.style.color="#484d4d"
+		//color value i ill take it from the input value
+		boxcopied.children[0].innerText=RundomcopieTxt()
+		boxcopied.children[1].innerText=mycopyevent.children[1].value
+		//animation
+		boxcopied.children[0].style.animation="tracking-in-contract-bck 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both"
+		boxcopied.children[1].style.animation="tracking-in-contract-bck 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both"
+		setTimeout(function(){ //for the outanimation
+		boxcopied.children[0].style.animation="tracking-out-expand-fwd 0.8s cubic-bezier(0.550, 0.085, 0.680, 0.530) 1s both"
+		boxcopied.children[1].style.animation="tracking-out-expand-fwd 0.8s cubic-bezier(0.550, 0.085, 0.680, 0.530) 1s both"
+		}, 1000);
+		setTimeout(function(){ 
+		boxcopied.style.display="none"
+		}, 3000); 
+ }
+ 
+Saturation.oninput=function() {   //input range event
+		SatuValShow.innerText=this.value+"%"
+		removeAllColorsVlas()
+		createMaincolors(this.value)
+		field_rgbVals_AND_hexVals()
+		writeColorsVals(selectedVal)
+	}
+myhover.onmouseleave=function() {
+   this.style.display= "none"
+   }
+
+
+//functions body 	 
+function RundomcopieTxt() {
+	var copieTxt=["great" ,"thanks","it's all yours","use it now","done!","copied!","Absolutely!","Of course!","Yes","agree.","That's different!","However!!","Me too!","I guess so.","You’re right."]
+	var rand=Math.floor(Math.random() * copieTxt.length)//random val frpm 0 to length-1
+	return copieTxt[rand]
+}
+function playSoundFun() {
+ 	if (playSound==true) {
+ 		var audio = new Audio('soundflip.mp3');
+		audio.play()
+ 	}
+ } 
+function selecttypeVale(type) {
+	  	writeColorsVals(type)
+	  	selectedVal=type
+	  // console.log(type)
+	  }  
+function createnewChild(val, parent) { // val only for backgroung input value e will take it from other place
+		var x = document.createElement("div")
+		var inp = document.createElement("input")
+		  x.setAttribute("class", "box")
+		  x.style.background=val
+		 //create <input type="text" disabled="disabled" value="#....."> 
+	     inp.setAttribute("type", "text")
+	     inp.setAttribute("disabled", "disabled")
+	     inp.setAttribute("class", "valcolor")  
+	     hslVals.push(val); 
+	     x.appendChild(inp);
+	     parent.appendChild(x);
+}
+function createMaincolors(Satu) {
+		var colorsScreen= document.getElementsByClassName("colorsScreen")
+		 var val=""
+		colorsScreen=colorsScreen[0]
+		//remove all child  in case we change satu=Saturation
+	        while (colorsScreen.firstChild) {
+				    colorsScreen.removeChild(colorsScreen.firstChild);
+				}
+		for (var h = 0; h <= 350;){
+     var obj={h:h, s:Satu, l:50} 
+	       hslValsObj.push(obj)
+	       val= "hsl("+h+","+Satu+"%,"+"50%)"
+	       createnewChild(val,colorsScreen)
+	       h+=10
+		}
+
+		for(var i = 0; i < box.length; i++){  //hover event
+	  box[i].addEventListener("mouseenter", function() {
+	    myhover.style.display="flex"  
+	       this.appendChild(myhover);
+	       // console.log(this)
+	  });}
+}
+function rgb2hex(rgb){
+	 rgb = rgb.match(/^rgb?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+	 return (rgb && rgb.length === 4) ? "#" +
+	  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+	  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+	  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';   // function to convert rgb to hex
+}
+function field_rgbVals_AND_hexVals() {
+		var valcolor = document.getElementsByClassName("valcolor");	
+		for (var i = 0; i < valcolor.length; i++) {
+			 rgbVals.push(valcolor[i].parentElement.style.background)
+			 hexVals.push(rgb2hex(valcolor[i].parentElement.style.background))
+		}
+}	
+function removeAllColorsVlas() {
+ while(hexVals.length!=0){
+ 	hslVals.shift()
+ 	hexVals.shift()
+ 	rgbVals.shift()
+ 	hslValsObj.shift()
+ }
+}
+function writeColorsVals(type) {
+	var valcolor = document.getElementsByClassName("valcolor");	
+	for (var i = 0; i < valcolor.length; i++) {
+
+            if (type==1) { //1=hex
+	           valcolor[i].setAttribute("value",hexVals[i])
+		   }else if(type==2){ //2==rgb
+               valcolor[i].setAttribute("value",rgbVals[i])
+		        }else{   //3==hsl
+               valcolor[i].setAttribute("value",hslVals[i])
+		       }
+		    //i mean div (color element)   
+		   valcolor[i].parentElement.setAttribute("id",i)    
+	}		
+}
+// family color
+function createNewMemberFamily(val, parent,presetage) { 
+		var x = document.createElement("div")
+		    x.setAttribute("class", "famcolRow")
+		var spn = document.createElement("span")
+		   spn.setAttribute("class", "presetage")
+		   spn.innerText=presetage+"%"
+		   if (presetage==50){
+               var hand = document.createElement("div")
+               hand.setAttribute("class", "thisis")
+               spn.innerText=""
+		   	spn.appendChild(hand);
+		   } 
+                   // thisis
+              
+		var dv = document.createElement("div")
+		   dv.setAttribute("class", "famcolbox") 
+		   dv.style.background=val 
+		   if (presetage==50) {dv.style.border="2px solid #90007f"} 
+		var inp = document.createElement("input")
+			inp.setAttribute("type", "text")
+		    inp.setAttribute("disabled", "disabled")
+		    inp.setAttribute("class", "valcolorFam") 
+		   if (presetage <50) {inp.style.color="white"} 
+		  
+         dv.appendChild(inp);
+         x.appendChild(spn);
+         x.appendChild(dv);
+	     parent.appendChild(x);
+	     hslValsfam.push(val);    
+	     // console.log(val)
+}
+function createFamilyColors(hue,Satu) {
+		var famillycolorsScreen= document.getElementsByClassName("famillycolorsScreen")
+		 var val=""
+		famillycolorsScreen=famillycolorsScreen[0]
+		//remove all child  in case we change satu=Saturation
+	        while (famillycolorsScreen.firstChild) {
+				    famillycolorsScreen.removeChild(famillycolorsScreen.firstChild);
+				}
+				targetcolor.style.background="hsl("+hue+","+Satu+"%,"+"50%)"
+		for (var l = 100; l >= 0;){
+			       val= "hsl("+hue+","+Satu+"%,"+l+"%)"
+			       createNewMemberFamily(val, famillycolorsScreen,l)
+			       l-=5   
+				}
+            // events hover and leave
+		for(var i = 0; i < famcolbox.length; i++){  //hover event
+	  famcolbox[i].addEventListener("mouseenter", function() {
+	    myhoverFam.style.display="flex"  
+	    this.insertBefore(myhoverFam, this.childNodes[0]);
+	       // this.appendChild(myhoverFam);
+	       // console.log(this)
+	  });}
+
+	  for(var i = 0; i < famcolbox.length; i++){  //hover event
+	  famcolbox[i].addEventListener("mouseleave", function() {
+	    myhoverFam.style.display="none"
+	  });}
+	  
+}
+function removeAllFamilyColorsVlas() {
+ while(hexValsfam.length!=0){
+ 	hslValsfam.shift()
+ 	hexValsfam.shift()
+ 	rgbValsfam.shift()
+ }
+}
+function field_rgbValsfam_AND_hexValsfam() {
+		var valcolorFam = document.getElementsByClassName("valcolorFam");	
+		for (var i = 0; i < valcolorFam.length; i++) {
+			 rgbValsfam.push(valcolorFam[i].parentElement.style.background)
+			 hexValsfam.push(rgb2hex(valcolorFam[i].parentElement.style.background))
+		}
+}
+function writeFamilyColorsVals(type) {
+	var valcolorFam = document.getElementsByClassName("valcolorFam");	
+	for (var i = 0; i < valcolorFam.length; i++) {
+            if (type==1) { //1=hex
+	           valcolorFam[i].setAttribute("value",hexValsfam[i])
+		   }else if(type==2){ //2==rgb
+               valcolorFam[i].setAttribute("value",rgbValsfam[i])
+		        }else{   //3==hsl
+               valcolorFam[i].setAttribute("value",hslValsfam[i])
+		       }
+		    //i mean div (color element)   
+		   // valcolorFam[i].parentElement.setAttribute("id",i)    
+	}		
+}
+function openNav() {
+  document.getElementById("mySidenav").style.width = "350px";
+}
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+
+</script>
+</body>
+</html>
